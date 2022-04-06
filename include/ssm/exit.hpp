@@ -106,12 +106,12 @@ constexpr auto is_nothrow_exitable_v =
 
 inline namespace cpos {
 
-SSM_INLINE_NS_BEGIN
+SSM_ANONYMOUS_NS_BEGIN
 
 SSM_INLINE(17)
 constexpr auto &exit = SSM_CPO_WRAP(exit_impl::exit_fn);
 
-SSM_INLINE_NS_END
+SSM_ANONYMOUS_NS_END
 
 } // namespace cpos
 

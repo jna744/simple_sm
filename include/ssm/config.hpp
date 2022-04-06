@@ -16,18 +16,18 @@
 #define SSM_INLINE_17
 #define SSM_INLINE_14 inline
 
-#define SSM_INLINE_NS_BEGIN namespace {
+#define SSM_ANONYMOUS_NS_BEGIN namespace {
 
-#define SSM_INLINE_NS_END }
+#define SSM_ANONYMOUS_NS_END }
 
 #else
 
 #define SSM_INLINE_17 inline
 #define SSM_INLINE_14
 
-#define SSM_INLINE_NS_BEGIN
+#define SSM_ANONYMOUS_NS_BEGIN
 
-#define SSM_INLINE_NS_END
+#define SSM_ANONYMOUS_NS_END
 
 #endif
 
