@@ -1,5 +1,5 @@
-#ifndef SSM_ON_ENTER_HPP
-#define SSM_ON_ENTER_HPP
+#ifndef SSM_ENTER_HPP
+#define SSM_ENTER_HPP
 
 #include <ssm/config.hpp>
 
@@ -117,4 +117,4 @@ SSM_INLINE_NS_END
 
 } // namespace ssm
 
-#endif // SSM_ENTER_STATE_HPP
+#endif // SSM_ENTER_HPP
