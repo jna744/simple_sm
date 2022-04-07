@@ -7,4 +7,4 @@
 #include <ssm/state_actions/exit.hpp>
 #include <ssm/state_actions/handle_event.hpp>
 
-#endif // SSM_STATE_ACTIONS_HPP
+#endif  // SSM_STATE_ACTIONS_HPP

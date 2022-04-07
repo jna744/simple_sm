@@ -20,7 +20,9 @@
 #define SSM_INLINE_17
 #define SSM_INLINE_14 inline
 
-#define SSM_ANONYMOUS_NS_BEGIN namespace {
+#define SSM_ANONYMOUS_NS_BEGIN                                                                                         \
+  namespace                                                                                                            \
+  {
 
 #define SSM_ANONYMOUS_NS_END }
 
@@ -37,19 +39,23 @@
 
 #define SSM_INLINE(version) SSM_INLINE_##version
 
-namespace ssm {
+namespace ssm
+{
 
-namespace detail {
+namespace detail
+{
 
-template <typename T> struct static_const {
+template <typename T>
+struct static_const {
   static constexpr T value = {};
 };
 
-template <typename T> constexpr T static_const<T>::value;
+template <typename T>
+constexpr T static_const<T>::value;
 
-} // namespace detail
+}  // namespace detail
 
-} // namespace ssm
+}  // namespace ssm
 
 #define SSM_CPO_WRAP(cpo_t) ::ssm::detail::static_const<cpo_t>::value
 
@@ -68,8 +74,7 @@ template <typename T> constexpr T static_const<T>::value;
 #if defined NDEBUG
 #define SSM_ASSERT(CHECK) void(0)
 #else
-#define SSM_ASSERT(CHECK)                                                      \
-  (SSM_LIKELY(CHECK) ? void(0) : [] { assert(!#CHECK); }())
+#define SSM_ASSERT(CHECK) (SSM_LIKELY(CHECK) ? void(0) : [] { assert(!#CHECK); }())
 #endif
 
-#endif // SSM_CONFIG_HPP
+#endif  // SSM_CONFIG_HPP

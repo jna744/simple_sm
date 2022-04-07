@@ -3,15 +3,19 @@
 
 #include <ssm/config.hpp>
 
-namespace ssm {
+namespace ssm
+{
 
-namespace state_actions {
+namespace state_actions
+{
 
-namespace detail {
+namespace detail
+{
 
-struct dummy_machine {};
+struct dummy_machine {
+};
 
-} // namespace detail
+}  // namespace detail
 
 template <typename State, typename Machine = detail::dummy_machine>
 struct is_enterable;
@@ -25,8 +29,7 @@ struct is_nothrow_enterable;
 
 template <typename State, typename Machine = detail::dummy_machine>
 SSM_INLINE(17)
-constexpr auto is_nothrow_enterable_v =
-    is_nothrow_enterable<State, Machine>::value;
+constexpr auto is_nothrow_enterable_v = is_nothrow_enterable<State, Machine>::value;
 
 template <typename State, typename Machine = detail::dummy_machine>
 struct is_exitable;
@@ -40,31 +43,24 @@ struct is_nothrow_exitable;
 
 template <typename State, typename Machine = detail::dummy_machine>
 SSM_INLINE(17)
-constexpr auto is_nothrow_exitable_v =
-    is_nothrow_exitable<State, Machine>::value;
+constexpr auto is_nothrow_exitable_v = is_nothrow_exitable<State, Machine>::value;
 
-template <typename State, typename Event,
-          typename Machine = detail::dummy_machine>
+template <typename State, typename Event, typename Machine = detail::dummy_machine>
 struct is_event_handler;
 
-template <typename State, typename Event,
-          typename Machine = detail::dummy_machine>
+template <typename State, typename Event, typename Machine = detail::dummy_machine>
 SSM_INLINE(17)
-constexpr auto is_event_handler_v =
-    is_event_handler<State, Event, Machine>::value;
+constexpr auto is_event_handler_v = is_event_handler<State, Event, Machine>::value;
 
-template <typename State, typename Event,
-          typename Machine = detail::dummy_machine>
+template <typename State, typename Event, typename Machine = detail::dummy_machine>
 struct is_nothrow_event_handler;
 
-template <typename State, typename Event,
-          typename Machine = detail::dummy_machine>
+template <typename State, typename Event, typename Machine = detail::dummy_machine>
 SSM_INLINE(17)
-constexpr auto is_nothrow_event_handler_v =
-    is_nothrow_event_handler<State, Event, Machine>::value;
+constexpr auto is_nothrow_event_handler_v = is_nothrow_event_handler<State, Event, Machine>::value;
 
-} // namespace state_actions
+}  // namespace state_actions
 
-} // namespace ssm
+}  // namespace ssm
 
-#endif // SSM_STATE_ACTIONS_FWD_HPP
+#endif  // SSM_STATE_ACTIONS_FWD_HPP
