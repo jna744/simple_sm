@@ -1,5 +1,4 @@
-#include <ssm/enter.hpp>
-#include <ssm/exit.hpp>
+#include <ssm/state_actions.hpp>
 
 #include "another_unit.hpp"
 
@@ -19,13 +18,13 @@ int main() {
   State state;
   Machine machine;
 
-  auto addr = reinterpret_cast<std::intptr_t>(&ssm::enter);
+  auto addr = reinterpret_cast<std::intptr_t>(&ssm::state_actions::enter);
 
-  ssm::enter(state, machine);
-  ssm::exit(state, machine);
+  ssm::state_actions::enter(state, machine);
+  ssm::state_actions::exit(state, machine);
 
   std::cout << "enter nothrow: "
-            << ssm::is_nothrow_enterable_v<State> << std::endl;
+            << ssm::state_actions::is_nothrow_enterable_v<State> << std::endl;
   std::cout << "exit nothrow: "
-            << ssm::is_nothrow_exitable_v<State> << std::endl;
+            << ssm::state_actions::is_nothrow_exitable_v<State> << std::endl;
 }

@@ -1,4 +1,4 @@
-#include <ssm/enter.hpp>
+#include <ssm/state_actions/enter.hpp>
 
 #include "another_unit.hpp"
 
@@ -16,8 +16,9 @@ int function() {
   S s;
   M m;
   std::cout << "Address in another unit:" << std::endl;
-  std::cout << reinterpret_cast<std::intptr_t>(&ssm::enter) << std::endl;
-  ssm::enter(s, m);
+  std::cout << reinterpret_cast<std::intptr_t>(&ssm::state_actions::enter)
+            << std::endl;
+  ssm::state_actions::enter(s, m);
   return 1;
 }
 

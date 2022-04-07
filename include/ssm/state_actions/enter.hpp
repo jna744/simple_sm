@@ -1,11 +1,14 @@
-#ifndef SSM_ENTER_HPP
-#define SSM_ENTER_HPP
+#ifndef SSM_STATE_ACTIONS_ENTER_HPP
+#define SSM_STATE_ACTIONS_ENTER_HPP
 
 #include <ssm/config.hpp>
+#include <ssm/state_actions/fwd.hpp>
 
 #include <smp/smp.hpp>
 
 namespace ssm {
+
+namespace state_actions {
 
 namespace enter_impl {
 
@@ -45,7 +48,6 @@ on_enter_impl(State &state, Machine &,
               m::m_tag_c<2>) noexcept(noexcept(state.on_enter())) {
   state.on_enter();
 }
-
 template <typename State, typename Machine,
           SSM_ON_ENTER_REQUIRED(f1, State &, Machine &)>
 inline constexpr void
@@ -82,27 +84,18 @@ struct enter_fn {
   }
 };
 
-struct dummy_machine {};
-
 } // namespace enter_impl
 
-template <typename State, typename Machine = enter_impl::dummy_machine>
-struct is_enterable
-    : smp::m_is_valid<enter_impl::on_enter_detected_t, State &, Machine &> {};
+template <typename State, typename Machine>
+struct is_enterable : smp::m_is_valid<enter_impl::on_enter_detected_t,
+                                      smp::m_remove_cvref<State> &,
+                                      smp::m_remove_cvref<Machine> &> {};
 
-template <typename State, typename Machine = enter_impl::dummy_machine>
-SSM_INLINE(17)
-constexpr auto is_enterable_v = is_enterable<State, Machine>::value;
-
-template <typename State, typename Machine = enter_impl::dummy_machine>
+template <typename State, typename Machine>
 struct is_nothrow_enterable
-    : smp::m_eval_if<is_enterable<State, Machine>, smp::m_false,
-                     enter_impl::on_enter_is_nothrow_t, State &, Machine &> {};
-
-template <typename State, typename Machine = enter_impl::dummy_machine>
-SSM_INLINE(17)
-constexpr auto is_nothrow_enterable_v =
-    is_nothrow_enterable<State, Machine>::value;
+    : smp::m_eval_or<smp::m_false, enter_impl::on_enter_is_nothrow_t,
+                     smp::m_remove_cvref<State> &,
+                     smp::m_remove_cvref<Machine &>> {};
 
 inline namespace cpos {
 
@@ -115,6 +108,8 @@ SSM_ANONYMOUS_NS_END
 
 } // namespace cpos
 
+} // namespace state_actions
+
 } // namespace ssm
 
-#endif // SSM_ENTER_HPP
+#endif // SSM_STATE_ACTIONS_ENTER_HPP

@@ -1,11 +1,14 @@
-#ifndef SSM_EXIT_HPP
-#define SSM_EXIT_HPP
+#ifndef SSM_STATE_ACTIONS_EXIT_HPP
+#define SSM_STATE_ACTIONS_EXIT_HPP
 
 #include <ssm/config.hpp>
+#include <ssm/state_actions/fwd.hpp>
 
 #include <smp/smp.hpp>
 
 namespace ssm {
+
+namespace state_actions {
 
 namespace exit_impl {
 
@@ -82,27 +85,18 @@ struct exit_fn {
   }
 };
 
-struct dummy_machine {};
-
 } // namespace exit_impl
 
-template <typename State, typename Machine = exit_impl::dummy_machine>
-struct is_exitable
-    : smp::m_is_valid<exit_impl::on_exit_detected_t, State &, Machine &> {};
+template <typename State, typename Machine>
+struct is_exitable : smp::m_is_valid<exit_impl::on_exit_detected_t,
+                                     smp::m_remove_cvref<State> &,
+                                     smp::m_remove_cvref<Machine> &> {};
 
-template <typename State, typename Machine = exit_impl::dummy_machine>
-SSM_INLINE(17)
-constexpr auto is_exitable_v = is_exitable<State, Machine>::value;
-
-template <typename State, typename Machine = exit_impl::dummy_machine>
+template <typename State, typename Machine>
 struct is_nothrow_exitable
-    : smp::m_eval_if<is_exitable<State, Machine>, smp::m_false,
-                     exit_impl::on_exit_is_nothrow_t, State &, Machine &> {};
-
-template <typename State, typename Machine = exit_impl::dummy_machine>
-SSM_INLINE(17)
-constexpr auto is_nothrow_exitable_v =
-    is_nothrow_exitable<State, Machine>::value;
+    : smp::m_eval_or<smp::m_false, exit_impl::on_exit_is_nothrow_t,
+                     smp::m_remove_cvref<State> &,
+                     smp::m_remove_cvref<Machine> &> {};
 
 inline namespace cpos {
 
@@ -115,6 +109,8 @@ SSM_ANONYMOUS_NS_END
 
 } // namespace cpos
 
+} // namespace state_actions
+
 } // namespace ssm
 
-#endif // SSM_EXIT_HPP
+#endif // SSM_STATE_ACTIONS_EXIT_HPP

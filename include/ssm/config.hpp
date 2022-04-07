@@ -1,6 +1,10 @@
 #ifndef SSM_CONFIG_HPP
 #define SSM_CONFIG_HPP
 
+#if !defined(NDEBUG)
+#include <cassert>
+#endif
+
 #if __cplusplus >= 201703L
 #define SSM_CPP_VERSION 17
 #elif __cplusplus >= 201402L
@@ -64,7 +68,6 @@ template <typename T> constexpr T static_const<T>::value;
 #if defined NDEBUG
 #define SSM_ASSERT(CHECK) void(0)
 #else
-#include <cassert>
 #define SSM_ASSERT(CHECK)                                                      \
   (SSM_LIKELY(CHECK) ? void(0) : [] { assert(!#CHECK); }())
 #endif
