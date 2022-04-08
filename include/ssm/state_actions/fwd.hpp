@@ -59,6 +59,20 @@ template <typename State, typename Event, typename Machine = detail::dummy_machi
 SSM_INLINE(17)
 constexpr auto is_nothrow_event_handler_v = is_nothrow_event_handler<State, Event, Machine>::value;
 
+template <typename State, typename Machine = detail::dummy_machine>
+struct is_updatable;
+
+template <typename State, typename Machine = detail::dummy_machine>
+SSM_INLINE(17)
+constexpr auto is_updatable_v = is_updatable<State, Machine>::value;
+
+template <typename State, typename Machine = detail::dummy_machine>
+struct is_nothrow_updatable;
+
+template <typename State, typename Machine = detail::dummy_machine>
+SSM_INLINE(17)
+constexpr auto is_nothrow_updatable_v = is_nothrow_updatable<State, Machine>::value;
+
 }  // namespace state_actions
 
 }  // namespace ssm

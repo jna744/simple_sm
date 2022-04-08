@@ -6,5 +6,6 @@
 #include <ssm/state_actions/enter.hpp>
 #include <ssm/state_actions/exit.hpp>
 #include <ssm/state_actions/handle_event.hpp>
+#include <ssm/state_actions/update.hpp>
 
 #endif  // SSM_STATE_ACTIONS_HPP
