@@ -1,12 +1,15 @@
-#ifndef SSM_ACTIONS_HANDLE_EVENT_HPP
-#define SSM_ACTIONS_HANDLE_EVENT_HPP
+#ifndef SIMPLE_SM_ACTIONS_HANDLE_EVENT_HPP
+#define SIMPLE_SM_ACTIONS_HANDLE_EVENT_HPP
 
-#include <ssm/config.hpp>
-#include <ssm/state_actions/fwd.hpp>
+#include <simple/sm/config.hpp>
+#include <simple/sm/state_actions/fwd.hpp>
 
-#include <smp/smp.hpp>
+#include <simple/mp.hpp>
 
-namespace ssm
+namespace simple
+{
+
+namespace sm
 {
 
 namespace state_actions
@@ -15,7 +18,7 @@ namespace state_actions
 namespace handle_event_impl
 {
 
-namespace m = smp;
+namespace m = mp;
 
 template <typename State, typename Event>
 using handle_event_m0_detected_t = decltype(m::m_declval<State>().handle_event(m::m_declval<Event>()));
@@ -138,20 +141,20 @@ struct handle_event_fn {
 }  // namespace handle_event_impl
 
 template <typename State, typename Event, typename Machine>
-struct is_event_handler : smp::m_is_valid<
+struct is_event_handler : mp::m_is_valid<
                               handle_event_impl::handle_event_detected_t,
-                              smp::m_remove_cvref<State>&,
-                              smp::m_remove_cvref<Event> const&,
-                              smp::m_remove_cvref<Machine>> {
+                              mp::m_remove_cvref<State>&,
+                              mp::m_remove_cvref<Event> const&,
+                              mp::m_remove_cvref<Machine>&> {
 };
 
 template <typename State, typename Event, typename Machine>
-struct is_nothrow_event_handler : smp::m_eval_or<
-                                      smp::m_false,
+struct is_nothrow_event_handler : mp::m_eval_or<
+                                      mp::m_false,
                                       handle_event_impl::handle_event_is_nothrow_t,
-                                      smp::m_remove_cvref<State>&,
-                                      smp::m_remove_cvref<Event> const&,
-                                      smp::m_remove_cvref<Machine>&> {
+                                      mp::m_remove_cvref<State>&,
+                                      mp::m_remove_cvref<Event> const&,
+                                      mp::m_remove_cvref<Machine>&> {
 };
 
 inline namespace cpos
@@ -168,6 +171,8 @@ SSM_ANONYMOUS_NS_END
 
 }  // namespace state_actions
 
-}  // namespace ssm
+}  // namespace sm
+
+}  // namespace simple
 
 #endif  // SSM_STATE_ACTIONS_HANDLE_EVENT_HPP

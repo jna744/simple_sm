@@ -1,12 +1,15 @@
-#ifndef SSM_STATE_ACTIONS_UPDATE_HPP
-#define SSM_STATE_ACTIONS_UPDATE_HPP
+#ifndef SIMPLE_SM_STATE_ACTIONS_UPDATE_HPP
+#define SIMPLE_SM_STATE_ACTIONS_UPDATE_HPP
 
-#include <ssm/config.hpp>
-#include <ssm/state_actions/fwd.hpp>
+#include <simple/sm/config.hpp>
+#include <simple/sm/state_actions/fwd.hpp>
 
-#include <smp/smp.hpp>
+#include <simple/mp.hpp>
 
-namespace ssm
+namespace simple
+{
+
+namespace sm
 {
 
 namespace state_actions
@@ -15,7 +18,7 @@ namespace state_actions
 namespace update_impl
 {
 
-namespace m = smp;
+namespace m = mp;
 
 template <typename State>
 using update_m0_detected_t = decltype(m::m_declval<State>().update());
@@ -82,15 +85,15 @@ struct update_fn {
 
 template <typename State, typename Machine>
 struct is_updatable
-  : smp::m_is_valid<update_impl::update_detected_t, smp::m_remove_cvref<State>&, smp::m_remove_cvref<Machine>&> {
+  : mp::m_is_valid<update_impl::update_detected_t, mp::m_remove_cvref<State>&, mp::m_remove_cvref<Machine>&> {
 };
 
 template <typename State, typename Machine>
-struct is_nothrow_updatable : smp::m_eval_or<
-                                  smp::m_false,
+struct is_nothrow_updatable : mp::m_eval_or<
+                                  mp::m_false,
                                   update_impl::update_is_nothrow_t,
-                                  smp::m_remove_cvref<State>&,
-                                  smp::m_remove_cvref<Machine>&> {
+                                  mp::m_remove_cvref<State>&,
+                                  mp::m_remove_cvref<Machine>&> {
 };
 
 inline namespace cpos
@@ -106,6 +109,8 @@ SSM_ANONYMOUS_NS_END
 
 }  // namespace state_actions
 
-}  // namespace ssm
+}  // namespace sm
 
-#endif  // SSM_STATE_ACTIONS_UPDATE_HPP
+}  // namespace simple
+
+#endif  // SIMPLE_SM_STATE_ACTIONS_UPDATE_HPP

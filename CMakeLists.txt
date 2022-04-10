@@ -1,47 +1,47 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(simple_state_machine VERSION 0.1)
+project(simple_sm VERSION 0.1)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(SSM_PRIMARY_PROJECT true)
   set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 endif()
 
-find_package(smp REQUIRED)
+find_package(simple_mp REQUIRED)
 
-add_library(ssm INTERFACE)
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(simple::sm ALIAS ${PROJECT_NAME})
 
 target_include_directories(
-  ssm INTERFACE
+  ${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(ssm INTERFACE smp::smp)
+target_link_libraries(${PROJECT_NAME} INTERFACE simple_mp)
 
 if(BUILD_TESTING AND SSM_PRIMARY_PROJECT)
   add_subdirectory(test)
 endif()
 
 install(
-  TARGETS ssm
-  EXPORT ssmTargets
+  TARGETS ${PROJECT_NAME}
+  EXPORT "${PROJECT_NAME}Targets"
   PUBLIC_HEADER DESTINATION include
 )
 
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
-  ssmConfigVersion.cmake
+  "${PROJECT_NAME}ConfigVersion.cmake"
   VERSION ${PACKAGE_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
 install(
-  EXPORT ssmTargets
-  FILE ssmConfig.cmake
-  NAMESPACE ssm::
-  DESTINATION lib/cmake/ssm
+  EXPORT "${PROJECT_NAME}Targets"
+  FILE "${PROJECT_NAME}Config.cmake"
+  DESTINATION lib/cmake/${PROJECT_NAME}
 )
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION include)

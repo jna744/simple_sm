@@ -1,9 +1,12 @@
-#ifndef SSM_STATE_ACTIONS_FWD_HPP
-#define SSM_STATE_ACTIONS_FWD_HPP
+#ifndef SIMPLE_SM_STATE_ACTIONS_FWD_HPP
+#define SIMPLE_SM_STATE_ACTIONS_FWD_HPP
 
-#include <ssm/config.hpp>
+#include <simple/sm/config.hpp>
 
-namespace ssm
+namespace simple
+{
+
+namespace sm
 {
 
 namespace state_actions
@@ -75,6 +78,8 @@ constexpr auto is_nothrow_updatable_v = is_nothrow_updatable<State, Machine>::va
 
 }  // namespace state_actions
 
-}  // namespace ssm
+}  // namespace sm
+
+}  // namespace simple
 
 #endif  // SSM_STATE_ACTIONS_FWD_HPP

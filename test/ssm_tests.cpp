@@ -1,30 +1,32 @@
-#include <ssm/state_actions.hpp>
-
 #include "another_unit.hpp"
+#include <simple/sm/sm_we.hpp>
+#include <simple/sm/state_actions.hpp>
+#include <simple/sm/state_traits.hpp>
 
 #include <iostream>
 
+struct State;
+struct State1;
+
+using sm_t = simple::sm::sm_woe<simple::sm::state_list<State, State1>>;
+
 struct State {
-  void on_enter() {}
-  void on_exit() {}
+  constexpr void on_enter() noexcept {}
+  constexpr void on_exit() {}
 };
 
-void on_enter(State &state) noexcept {}
+struct State1 {
+};
 
-struct Machine {};
+constexpr auto get_value() noexcept
+{
+  sm_t sm;
+  sm.set_state<State1>();
+  sm.set_state<State>();
+  return sm;
+}
 
-int main() {
-
-  State state;
-  Machine machine;
-
-  auto addr = reinterpret_cast<std::intptr_t>(&ssm::state_actions::enter);
-
-  ssm::state_actions::enter(state, machine);
-  ssm::state_actions::exit(state, machine);
-
-  std::cout << "enter nothrow: "
-            << ssm::state_actions::is_nothrow_enterable_v<State> << std::endl;
-  std::cout << "exit nothrow: "
-            << ssm::state_actions::is_nothrow_exitable_v<State> << std::endl;
+int main()
+{
+  constexpr auto sm = get_value();
 }

@@ -1,5 +1,5 @@
-#ifndef SSM_CONFIG_HPP
-#define SSM_CONFIG_HPP
+#ifndef SIMPLE_SM_CONFIG_HPP
+#define SIMPLE_SM_CONFIG_HPP
 
 #if !defined(NDEBUG)
 #include <cassert>
@@ -10,7 +10,7 @@
 #elif __cplusplus >= 201402L
 #define SSM_CPP_VERSION 14
 #else
-#error "scl requires at least c++14"
+#error "simple::sm requires at least c++14"
 #endif
 
 #define SSM_IS_CPP(version) version == SSM_CPP_VERSION
@@ -39,7 +39,10 @@
 
 #define SSM_INLINE(version) SSM_INLINE_##version
 
-namespace ssm
+namespace simple
+{
+
+namespace sm
 {
 
 namespace detail
@@ -55,9 +58,11 @@ constexpr T static_const<T>::value;
 
 }  // namespace detail
 
-}  // namespace ssm
+}  // namespace sm
 
-#define SSM_CPO_WRAP(cpo_t) ::ssm::detail::static_const<cpo_t>::value
+}  // namespace simple
+
+#define SSM_CPO_WRAP(cpo_t) ::simple::sm::detail::static_const<cpo_t>::value
 
 #if defined(__GNUC__) || defined(__clang__)
 #define SSM_UNREACHABLE() __builtin_unreachable()
