@@ -7,7 +7,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 endif()
 
-find_package(simple_mp REQUIRED)
+if (NOT TARGET simple_mp)
+  find_package(simple_mp REQUIRED)
+endif()
 
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(simple::sm ALIAS ${PROJECT_NAME})
